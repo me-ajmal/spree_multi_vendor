@@ -28,8 +28,9 @@ module Spree
       has_many :variants
       has_many :vendor_users
     end
-
+    belongs_to :category
     has_many :users, through: :vendor_users
+    accepts_nested_attributes_for :users
 
     after_create :create_stock_location
     after_update :update_stock_location_names

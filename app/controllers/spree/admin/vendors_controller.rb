@@ -50,7 +50,11 @@ module Spree
           translation = @vendor.translations.find_or_create_by(locale: data[:locale])
           translation.name = data[:name]
           translation.about_us = data[:about_us]
-          translation.contact_us = data[:contact_us]
+          # translation.contact_us = data[:contact_us]
+          translation.age = data[:age]
+          translation.country = data[:country]
+          translation.gender = data[:gender]
+          translation.category_id = data[:category_id]
           translation.slug = data[:slug]
           translation.save!
         end

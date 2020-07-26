@@ -1,9 +1,9 @@
 <% content_for :page_title do %>
-  <%= Spree.t(plural_resource_name(Spree::Vendor)) %>
+  Celebrities
 <% end %>
 
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:new_vendor), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_vendor' } %>
+  <%= button_link_to Spree.t(:new_celebrity), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_vendor' } %>
 <% end if can?(:create, Spree::Vendor) %>
 
 <% content_for :table_filter do %>
@@ -43,13 +43,16 @@
           <%= sort_link @search, :name, I18n.t(:name, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
         <th>
+          Category
+        </th>
+        <th>
           <%= sort_link @search, :state, I18n.t(:state, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
         <th>
           <%= I18n.t(:about_us, scope: 'activerecord.attributes.spree/vendor') %>
         </th>
         <th>
-          <%= I18n.t(:contact_us, scope: 'activerecord.attributes.spree/vendor') %>
+          Country
         </th>
         <% if Spree.version.to_f >= 3.6 %>
           <th>
@@ -72,6 +75,9 @@
             <%= vendor.name %>
           </td>
           <td>
+            <%= vendor.category&.name %>
+          </td>
+          <td>
             <span class="label label-<%= vendor.state.downcase %>"><%= vendor.state.humanize.downcase %></span>
             <span class="icon icon-filter filterable js-add-filter" data-ransack-field="q_state_eq" data-ransack-value="<%= vendor.state %>"></span>
           </td>
@@ -79,7 +85,7 @@
             <%= vendor.about_us&.truncate(20) %>
           </td>
           <td>
-            <%= vendor.contact_us&.truncate(20) %>
+            <%= vendor.country %>
           </td>
           <% if Spree.version.to_f >= 3.6 %>
             <td>
