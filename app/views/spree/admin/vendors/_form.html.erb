@@ -1,5 +1,11 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @vendor } %>
 <div class="form-group">
+  <%= f.fields_for(:users, @vendor.users.build) do |ff| %>
+    <%= ff.label :email %>
+    <%= ff.email_field :email, class: 'form-control' %>
+    <%= ff.label :password %>
+    <%= ff.password_field :password, class: 'form-control' %>
+  <% end %>
   <%= f.field_container :name do %>
     <%= f.label :celebrity_name %>
     <%= f.text_field :name, class: 'form-control' %>

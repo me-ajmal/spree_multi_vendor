@@ -59,6 +59,11 @@ module Spree
           translation.save!
         end
       end
+
+      def permitted_resource_params
+        params.require(resource.object_name).permit(:name, :category_id,:gender,:age,:country,:about_us, :state, :notification_email,users_attributes: [:email,:password])
+      end
+
     end
   end
 end
