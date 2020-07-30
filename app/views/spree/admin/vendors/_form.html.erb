@@ -1,10 +1,12 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @vendor } %>
 <div class="form-group">
-  <%= f.fields_for(:users, @vendor.users.build) do |ff| %>
-    <%= ff.label :email %>
-    <%= ff.email_field :email, class: 'form-control' %>
-    <%= ff.label :password %>
-    <%= ff.password_field :password, class: 'form-control' %>
+  <% if @vendor.new_record? %>
+    <%= f.fields_for(:users, @vendor.users.build) do |ff| %>
+      <%= ff.label :email %>
+      <%= ff.email_field :email, class: 'form-control' %>
+      <%= ff.label :password %>
+      <%= ff.password_field :password, class: 'form-control' %>
+    <% end %>
   <% end %>
   <%= f.field_container :name do %>
     <%= f.label :celebrity_name %>
@@ -33,8 +35,8 @@
   <%= f.field_container :state do %>
     <%= f.label :state %>
     <%= f.select :state,
-      options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
-      {}, class: 'select2', required: :required %>
+                 options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
+                 {}, class: 'select2', required: :required %>
   <% end %>
   <% if Spree.version.to_f >= 3.6 %>
     <%= f.field_container :image do %>
@@ -44,8 +46,8 @@
     <% end %>
   <% end %>
   <%#= f.field_container :commission_rate do %>
-    <%#= f.label :commission_rate %>
-    <%#= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
+  <%#= f.label :commission_rate %>
+  <%#= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
   <%# end %>
   <%= f.field_container :notification_email do%>
     <%= f.label :notification_email %>

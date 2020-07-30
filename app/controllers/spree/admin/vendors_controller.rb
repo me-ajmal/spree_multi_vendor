@@ -55,6 +55,7 @@ module Spree
           translation.country = data[:country]
           translation.gender = data[:gender]
           translation.category_id = data[:category_id]
+          translation.email = data[:email]
           translation.slug = data[:slug]
           translation.save!
         end

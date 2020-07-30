@@ -2,10 +2,109 @@
   <%= link_to 'Celebrities', spree.admin_vendors_url %> /
   <%= @vendor.name %>
 <% end %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h1 class="card-title mb-0 h5">
+          <%= Spree.t(:profile_settings) %>
+        </h1>
+      </div>
+      <div class="card-body">
+        <%= form_for [:admin, @vendor] do |f| %>
+          <fieldset>
+            <%= render partial: 'form', locals: { f: f } %>
+            <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<%= form_for [:admin, @vendor] do |f| %>
-  <fieldset>
-    <%= render partial: 'form', locals: { f: f } %>
-    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
-  </fieldset>
-<% end %>
+  <div class="col-md-6">
+    <% @user = @vendor.users.first %>
+    <div data-hook="admin_user_edit_general_settings" class="card mb-3">
+      <div class="card-header">
+        <h1 class="card-title mb-0 h5">
+          <%= Spree.t(:login_settings) %>
+        </h1>
+      </div>
+
+      <div class="card-body">
+        <div data-hook="admin_user_edit_form_header">
+          <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @user } %>
+        </div>
+
+        <div data-hook="admin_user_edit_form">
+          <%= form_for [:admin, @user], as: :user, url: spree.admin_user_url(@user), method: :put do |f| %>
+            <div data-hook="admin_user_form_password_fields" class="col-12">
+              <%= f.field_container :email, class: ['form-group'] do %>
+                <%= f.label :email, Spree.t(:email) %>
+                <%= f.email_field :email, class: 'form-control' %>
+                <%= f.error_message_on :email %>
+              <% end %>
+              <%= f.field_container :password, class: ['form-group'] do %>
+                <%= f.label :password, Spree.t(:password) %>
+                <%= f.password_field :password, class: 'form-control' %>
+                <%= f.error_message_on :password %>
+              <% end %>
+
+              <%= f.field_container :password_confirmation, class: ['form-group'] do %>
+                <%= f.label :password_confirmation, Spree.t(:confirm_password) %>
+                <%= f.password_field :password_confirmation, class: 'form-control' %>
+                <%= f.error_message_on :password_confirmation %>
+              <% end %>
+            </div>
+
+            <div data-hook="admin_user_edit_form_button">
+              <%= render partial: 'spree/admin/shared/edit_resource_links', locals: { collection_url: spree.admin_users_url } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!--    <div data-hook="admin_user_api_key" id="admin_user_edit_api_key" class="card mb-3">-->
+    <!--      <div class="card-header">-->
+    <!--        <h1 class="card-title mb-0 h5">-->
+    <%#= Spree.t('access', scope: 'api') %>
+    <!--        </h1>-->
+    <!--      </div>-->
+
+    <!--      <div class="card-body">-->
+    <%# if @user.spree_api_key.present? %>
+    <!--          <div class="form-group">-->
+    <!--            <div id="current-api-key">-->
+    <!--              <label><%#= Spree.t('key', scope: 'api') %>: </label>-->
+    <!--              <strong><%#= @user.spree_api_key %></strong>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div class="form-actions">-->
+    <%#= form_tag spree.clear_api_key_admin_user_path(@user), method: :put do %>
+    <%#= button Spree.t('clear_key', scope: 'api'), 'delete.svg', 'submit', class: "btn-danger" %>
+    <%# end %>
+
+    <!--            <span class="or"><%#= Spree.t(:or)%></span>-->
+
+    <%#= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
+    <%#= button Spree.t('regenerate_key', scope: 'api'), 'recycle.svg' %>
+    <%# end %>
+    <!--          </div>-->
+
+    <%# else %>
+
+    <!--          <div class="alert alert-warning"><%#= Spree.t('no_key', scope: 'api') %></div>-->
+
+    <!--          <div class="form-actions">-->
+    <%#= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
+    <%#= button Spree.t('generate_key', scope: 'api'), 'key' %>
+    <%# end %>
+    <!--          </div>-->
+    <%# end %>
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <%#= render 'spree/admin/users/lifetime_stats' %>
+
+  </div>
+</div>
