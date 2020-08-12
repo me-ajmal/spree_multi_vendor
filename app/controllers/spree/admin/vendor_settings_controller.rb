@@ -15,6 +15,14 @@ module Spree
         end
       end
 
+      def sale_reports
+
+      end
+
+      def block_fans
+
+      end
+
       private
 
       def authorize
