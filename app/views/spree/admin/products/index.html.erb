@@ -26,7 +26,7 @@
         <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
           <div class="col-md-6">
             <div class="form-group">
-              <%= f.label :vendor_name_cont, Spree.t(:vendor_name) %>
+              <%= f.label :vendor_name_cont, Spree.t(:celebrity_name) %>
               <%= f.text_field :vendor_name_cont, class: "form-control" %>
             </div>
           </div>
