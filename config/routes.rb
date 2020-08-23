@@ -12,9 +12,6 @@ Spree::Core::Engine.routes.draw do
   end
 
   resources :vendors do
-    member do
-      get :events
-    end
     collection do
       post :update_positions
     end
