@@ -19,7 +19,7 @@ Deface::Override.new(
             <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
               <div data-hook="admin_product_form_vendor">
                 <%= f.field_container :vendor, class: ['form-group'] do %>
-                  <%= f.label :vendor_id, Spree.t(:vendor) %>
+                  <%= f.label :vendor_id, "Celebrity" %>
                   <%= f.collection_select(:vendor_id, @vendors, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
                   <%= f.error_message_on :vendor %>
                 <% end %>
