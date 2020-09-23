@@ -5,6 +5,7 @@ class Spree::VendorAbility
     @vendor_ids = user.vendors.active.ids
 
     if @vendor_ids.any?
+      apply_wishes_permissions
       apply_classifications_permissions
       apply_order_permissions
       apply_image_permissions
@@ -32,6 +33,10 @@ class Spree::VendorAbility
 
   def apply_classifications_permissions
     can :manage, Spree::Classification, product: { vendor_id: @vendor_ids }
+    end
+
+  def apply_wishes_permissions
+    can :manage, Spree::Wish, vendor_id: @vendor_ids
   end
 
   def apply_order_permissions

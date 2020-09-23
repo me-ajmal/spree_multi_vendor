@@ -27,6 +27,7 @@ module Spree
       has_many :stock_locations
       has_many :variants
       has_many :vendor_users
+      has_many :wishes
     end
     belongs_to :category
     has_many :users, through: :vendor_users
