@@ -48,7 +48,7 @@ module Spree
 
     scope :active, -> { where(state: 'active') }
 
-    self.whitelisted_ransackable_attributes = %w[name state]
+    self.whitelisted_ransackable_attributes = %w[name state gender about_us country]
 
     def update_notification_email(email)
       update(notification_email: email)
