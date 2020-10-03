@@ -1,0 +1,10 @@
+if($('.js-change-status').hasClass('btn-primary')) {
+    $('.js-change-status').removeClass('btn-primary')
+    $('.js-change-status').addClass('btn-danger')
+    $('.js-change-status').text('Block')
+}
+else{
+     $('.js-change-status').addClass('btn-primary')
+    $('.js-change-status').removeClass('btn-danger')
+     $('.js-change-status').text('Unblock')
+}

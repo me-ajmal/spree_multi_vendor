@@ -4,30 +4,29 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    </tbody>
+    <% if @fans.any? %>
+      <% @fans.each_with_index do |fan,index|%>
+        <% current_status = Spree::FanStatus.where(fan_id: fan.id).where(vendor_id: spree_current_user.id).first%>
+        <tbody>
+        <tr>
+          <th scope="row"><%= index+1 %></th>
+          <td><%= fan.name %></td>
+          <td><%= fan.age %></td>
+          <td><%= fan.email %></td>
+          <% if current_status.nil? || current_status.status == 'unblock' %>
+            <td><%= link_to 'Block', admin_change_status_path(fan_id: fan.id), method: :get, remote: true, class: 'icon_link btn btn-danger btn-sm js-change-status', data: { action: :remove, confirm: Spree.t(:are_you_sure) } %></td>
+          <%else%>
+            <td><%= link_to 'Unblock', admin_change_status_path(fan_id: fan.id), method: :get, remote: true, class: 'icon_link btn btn-primary btn-sm js-change-status', data: { action: :remove, confirm: Spree.t(:are_you_sure) } %></td>
+          <%end%>
+        </tr>
+        </tbody>
+      <%end%>
+    <%end%>
   </table>
 </div>

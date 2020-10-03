@@ -20,7 +20,28 @@ module Spree
       end
 
       def block_fans
+        # all fans
+        # fans = Spree::User.includes(:vendor_users).where(spree_vendor_users: { user_id: nil })
+        @fans = []
+        vendor_products_ids = spree_current_user.vendors.first.products.pluck(:id)
+        Spree::Order.all.each do |order|
+          if (order.products & vendor_products_ids).present?
+            @fans << order.user if !(order.user.has_spree_role? :admin)
+          end
+        end
+      end
 
+      def change_status
+        if params[:fan_id].present?
+          current_status = Spree::FanStatus.where(fan_id: params[:fan_id]).where(vendor_id: spree_current_user.id).first
+
+          if current_status.present?
+            current_status.status = current_status.status == 'block' ? 'unblock' : 'block'
+            current_status.save!
+          else
+            Spree::FanStatus.create(fan_id: params[:fan_id], vendor_id: spree_current_user.id, status: 'block')
+          end
+        end
       end
 
       private

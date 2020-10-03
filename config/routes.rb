@@ -9,6 +9,7 @@ Spree::Core::Engine.routes.draw do
     patch 'vendor_settings' => 'vendor_settings#update'
     get 'sale_reports' => 'vendor_settings#sale_reports'
     get 'block_fans' => 'vendor_settings#block_fans'
+    get 'change_status' => 'vendor_settings#change_status'
   end
 
   resources :vendors do

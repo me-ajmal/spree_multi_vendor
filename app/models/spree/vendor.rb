@@ -30,6 +30,7 @@ module Spree
       has_many :wishes
     end
     belongs_to :category
+    belongs_to :vendor, class_name: 'Spree::FanStatus', foreign_key: 'vendor_id'
     has_many :users, through: :vendor_users
     accepts_nested_attributes_for :users
 
