@@ -25,7 +25,7 @@ module Spree
         @fans = []
         vendor_products_ids = spree_current_user.vendors.first.products.pluck(:id)
         Spree::Order.all.each do |order|
-          if (order.products & vendor_products_ids).present?
+          if (order.products.pluck(:id) & vendor_products_ids).present?
             @fans << order.user if !(order.user.has_spree_role? :admin)
           end
         end
