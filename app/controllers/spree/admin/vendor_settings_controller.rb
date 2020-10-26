@@ -16,7 +16,34 @@ module Spree
       end
 
       def sale_reports
-
+         @categories = Spree::Taxonomy.includes(root: :children).find_by(name: 'Categories').taxons.select{|s|s.children.empty?}
+      end
+      def get_order_report  
+        @categories = Spree::Taxonomy.includes(root: :children).find_by(name: 'Categories').taxons.select{|s|s.children.empty?}
+        @orders = Spree::Order.all  
+          if params[:taxon_id].present?
+            category_orders = []
+            Spree::Order.all.each do |order|
+             category_orders  << order if order.products.present? && order.products.select{|product| product.category.present? && product.category.id.to_s == params[:category_id] }.present?
+           end
+           @orders = category_orders.flatten
+          end
+          @orders = Spree::Order.where(id: @orders.pluck(:id)) if @orders.present?
+          @total_amount = 0
+          @complete_amount =0
+          @pending_amount = 0
+          @pending_order = 0
+          @complete_order = 0
+          @orders.each do |order|
+            # @totals[order.currency] = { item_total: ::Money.new(0, order.currency), adjustment_total: ::Money.new(0, order.currency), sales_total: ::Money.new(0, order.currency),sales_complete: ::Money.new(0, order.currency),sales_pending: ::Money.new(0, order.currency)} unless @totals[order.currency]
+            # @totals[order.currency][:item_total] += order.display_item_total.money
+            # @totals[order.currency][:adjustment_total] += order.display_adjustment_total.money
+            @total_amount += order.amount.to_i
+            @complete_amount += order.amount.to_i if order.state == "complete"
+            @pending_amount += order.amount.to_i if order.state == "pending"
+            @pending_order += 1 if order.state == "pending"
+            @complete_order += 1 if order.state == "complete"
+          end
       end
 
       def block_fans
