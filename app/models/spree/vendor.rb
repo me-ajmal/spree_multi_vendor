@@ -65,6 +65,10 @@ module Spree
                  :slug, fallbacks_for_empty_translations: true
     end
 
+    def ransackable_associations(auth_object = nil)
+      reflect_on_all_associations.map { |a| a.name.to_s }
+    end
+
     private
 
     def create_stock_location
