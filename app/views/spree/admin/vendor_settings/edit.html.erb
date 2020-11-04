@@ -1,4 +1,4 @@
-<% content_for :page_title do %>
+`<% content_for :page_title do %>
   <%= @vendor.name %>
 <% end %>
 
@@ -49,8 +49,17 @@
       <div class="form-group">
         <%= f.field_container :image do %>
           <%= f.label :image %>
-          <%= f.file_field :image, required: :true %>
-          <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
+          <% if spree_current_user.admin? %>
+            <%= f.file_field :image %>
+            <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
+          <% else %>
+            <% if @vendor.image %>
+              <%= f.file_field :image %>
+              <%= image_tag main_app.url_for(@vendor.image.url(:small)) %>
+            <% else %>
+              <%= f.file_field :image, required: :true %>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     <% end %>
@@ -61,3 +70,21 @@
     </div>
   </fieldset>
 <% end %>
+
+<% unless spree_current_user.admin? %>
+  <script>
+      $(".edit_vendor").validate({
+          rules: {
+              "vendor[name]": "required",
+              "vendor[category_id]": "required",
+              "vendor[gender]": "required",
+              "vendor[age]": "required",
+              "vendor[country]": "required",
+          },
+          submitHandler: function(form) {
+              form.submit();
+          }
+      });
+  </script>
+<% end %>
+`
