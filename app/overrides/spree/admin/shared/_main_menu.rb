@@ -26,7 +26,7 @@ Deface::Override.new(
                 <% end %>
                 <% if defined?(current_spree_vendor) && current_spree_vendor %>
                   <ul class="nav nav-sidebar border-bottom">
-                    <%= tab 'Celebrity', url: admin_vendor_settings_path, icon: 'user' %>
+                    <%= tab 'Celebrity Details', url: admin_vendor_settings_path, icon: 'user' %>
                   </ul>
                 <% end %>
 HTML
