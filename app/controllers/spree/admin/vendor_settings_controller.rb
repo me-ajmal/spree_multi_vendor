@@ -23,8 +23,8 @@ module Spree
         @orders = Spree::Order.all  
           if params[:taxon_id].present?
             category_orders = []
-            Spree::Order.all.each do |order|
-             category_orders  << order if order.products.present? && order.products.select{|product| product.category.present? && product.category.id.to_s == params[:category_id] }.present?
+            @orders.each do |order|
+             category_orders  << order if order.products.present? && order.products.select{|product| product.category.present? && product.category.id.to_s == params[:taxon_id] }.present?
            end
            @orders = category_orders.flatten
           end
