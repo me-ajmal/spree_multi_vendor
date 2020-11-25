@@ -20,8 +20,8 @@ module Spree
       end
       def get_order_report  
         @categories = Spree::Taxonomy.includes(root: :children).find_by(name: 'Categories').taxons.select{|s|s.children.empty?}
-        @orders = Spree::Order.all  
-          if params[:taxon_id].present?
+        @orders = Spree::Order.includes(:products).where(:spree_products => {vendor_id: spree_current_user.vendors.last.id})
+        if params[:taxon_id].present?
             category_orders = []
             @orders.each do |order|
              category_orders  << order if order.products.present? && order.products.select{|product| product.category.present? && product.category.id.to_s == params[:taxon_id] }.present?
