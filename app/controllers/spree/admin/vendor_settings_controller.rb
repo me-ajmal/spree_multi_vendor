@@ -54,6 +54,7 @@ module Spree
         Spree::Order.all.each do |order|
           if (order.products.pluck(:id) & vendor_products_ids).present?
             @fans << order.user if !(order.user.has_spree_role? :admin)
+            @fans = @fans.uniq
           end
         end
       end
