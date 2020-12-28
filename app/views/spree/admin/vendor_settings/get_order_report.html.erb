@@ -7,8 +7,7 @@
           <div class="form-group">
             <label for="exampleFormControlSelect1">Activity</label>
           <%= form_tag(admin_get_order_reports_path) do %>
-            <%= select_tag 'taxon_id', options_for_select(@categories.collect{ |u| [u.name.downcase == "exclusives" ? 'Shout Out' : u.name.downcase == "shout out" ? 'Exclusives' : u.name, u.id] }, :selected => params[:taxon_id]),class: 'form-control',
-              :onchange => ("this.form.submit();")%>
+            <%= select_tag 'taxon_id', options_for_select(@categories.collect{ |u| [u.name.downcase == "exclusives" ? 'Shout Out' : u.name.downcase == "shout out" ? 'Exclusives' : u.name, u.id] }, :selected => params[:taxon_id]),class: 'form-control', :prompt => "Please select", :onchange => ("this.form.submit();")%>
           <% end -%>
           </div>
       </div>
